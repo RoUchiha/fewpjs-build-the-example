@@ -4,7 +4,32 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 
+const hearts = document.getElementsByClassName("like-glyph");
 
+
+function likeFunction(heart) {
+  const like = heart.target;
+  mimicServerCall("bogusUrl")
+  .then( function(resp) {
+    if (like.innerHTML === EMPTY_HEART) {
+      like.innerHTML = FULL_HEART;
+      like.style.color = "red";
+    } else if (like.innerHTML === FULL_HEART) {
+      like.innerHTML = EMPTY_HEART;
+      like.style.color = "";
+    }
+  })
+    .catch(function(error){
+      const errorModal = document.getElementById("modal");
+      errorModal.classList.remove("hidden");
+      setTimeout(() => errorModal.className = "hidden", 3000);
+    });
+}
+
+
+for (const heart of hearts) {
+  heart.addEventListener('click', likeFunction);
+}
 
 
 //------------------------------------------------------------------------------
